@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A responsive personal expense tracker dashboard built with HTML, CSS and JavaScript.">
+  <title>SpendWise | Expense Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <a href="#" class="brand">
+        <span class="brand-icon">₹</span>
+        <span>SpendWise</span>
+      </a>
+
+      <p class="nav-label">MENU</p>
+      <nav class="navigation">
+        <a class="nav-link active" href="#dashboard">▦ <span>Dashboard</span></a>
+        <a class="nav-link" href="#transactions">↔ <span>Transactions</span></a>
+        <a class="nav-link" href="#analytics">◷ <span>Analytics</span></a>
+      </nav>
+
+      <div class="sidebar-note">
+        <span class="note-icon">✦</span>
+        <h3>Build better habits</h3>
+        <p>Small savings today can make a big difference tomorrow.</p>
+      </div>
+
+      <div class="sidebar-footer">
+        <span class="avatar">D</span>
+        <div>
+          <strong>My Account</strong>
+          <small>Personal finance</small>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="dashboard">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">YOUR FINANCES AT A GLANCE</p>
+          <h1>Dashboard</h1>
+          <p class="muted">Track your money. Make it count.</p>
+        </div>
+        <div class="topbar-date">
+          <span>◷</span>
+          <span id="today-date">Today</span>
+        </div>
+      </header>
+
+      <section class="summary-grid" aria-label="Financial summary">
+        <article class="summary-card balance-card">
+          <div class="card-heading">
+            <span>Total balance</span>
+            <span class="card-icon">₹</span>
+          </div>
+          <h2 id="balance">₹0.00</h2>
+          <p class="card-foot">Income minus expenses</p>
+          <div class="balance-decoration">₹</div>
+        </article>
+
+        <article class="summary-card">
+          <div class="card-heading">
+            <span>Total income</span>
+            <span class="card-icon income-icon">↗</span>
+          </div>
+          <h2 id="income">₹0.00</h2>
+          <p class="card-foot"><span class="positive">●</span> Money received</p>
+        </article>
+
+        <article class="summary-card">
+          <div class="card-heading">
+            <span>Total expenses</span>
+            <span class="card-icon expense-icon">↘</span>
+          </div>
+          <h2 id="expenses">₹0.00</h2>
+          <p class="card-foot"><span class="negative">●</span> Money spent</p>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel form-panel">
+          <div class="section-heading">
+            <div>
+              <h2>Add transaction</h2>
+              <p class="muted">Record your income or expenses.</p>
+            </div>
+            <span class="heading-icon">＋</span>
+          </div>
+
+          <form id="transaction-form">
+            <label for="description">Description</label>
+            <input
+              type="text"
+              id="description"
+              placeholder="e.g. Grocery shopping"
+              maxlength="60"
+              required
+            >
+
+            <div class="form-row">
+              <div>
+                <label for="amount">Amount (₹)</label>
+                <input
+                  type="number"
+                  id="amount"
+                  placeholder="500"
+                  min="0.01"
+                  max="1000000000"
+                  step="0.01"
+                  required
+                >
+              </div>
+              <div>
+                <label for="type">Type</label>
+                <select id="type" required>
+                  <option value="expense">Expense</option>
+                  <option value="income">Income</option>
+                </select>
+              </div>
+            </div>
+
+            <label for="category">Category</label>
+            <select id="category" required>
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Bills">Bills</option>
+              <option value="Health">Health</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Education">Education</option>
+              <option value="Salary">Salary</option>
+              <option value="Freelance">Freelance</option>
+              <option value="Other">Other</option>
+            </select>
+
+            <label for="date">Date</label>
+            <input type="date" id="date" required>
+
+            <button class="primary-button" type="submit">
+              <span>＋</span> Add transaction
+            </button>
+            <p id="form-message" class="form-message" aria-live="polite"></p>
+          </form>
+        </article>
+
+        <article class="panel analytics-panel" id="analytics">
+          <div class="section-heading">
+            <div>
+              <h2>Spending overview</h2>
+              <p class="muted">Your expenses by category</p>
+            </div>
+            <span class="heading-icon">◔</span>
+          </div>
+
+          <div id="category-chart" class="category-chart">
+            <div class="empty-chart">Add an expense to see your spending breakdown.</div>
+          </div>
+          <div id="category-legend" class="category-legend"></div>
+        </article>
+      </section>
+
+      <section class="panel transactions-panel" id="transactions">
+        <div class="section-heading transaction-heading">
+          <div>
+            <h2>Recent transactions</h2>
+            <p class="muted">View and manage your money activity.</p>
+          </div>
+          <span class="transaction-count" id="transaction-count">0 records</span>
+        </div>
+
+        <div class="filters">
+          <div class="search-box">
+            <span>⌕</span>
+            <input type="search" id="search" placeholder="Search transactions..." aria-label="Search transactions">
+          </div>
+          <select id="filter-type" aria-label="Filter by transaction type">
+            <option value="all">All types</option>
+            <option value="income">Income</option>
+            <option value="expense">Expenses</option>
+          </select>
+          <select id="filter-category" aria-label="Filter by category">
+            <option value="all">All categories</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Bills">Bills</option>
+            <option value="Health">Health</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Education">Education</option>
+            <option value="Salary">Salary</option>
+            <option value="Freelance">Freelance</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Transaction</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="transaction-list"></tbody>
+          </table>
+        </div>
+        <p id="empty-state" class="empty-state">
+          No transactions yet. Add your first transaction above!
+        </p>
+      </section>
+
+      <footer class="footer">
+        <span>SpendWise · Personal Expense Tracker</span>
+        <span>Built with HTML, CSS & JavaScript</span>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
